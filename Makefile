@@ -5,13 +5,13 @@ all: eda regression report
 data:
 	curl -o data/Advertising.csv http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv
 
-tests: code/test-regression.R
+tests: code/test-regression.R code/functions/regression-functions.R
 	Rscript code/test-regression.R
 
-eda: code/scripts/eda-script.R
+eda: code/scripts/eda-script.R data/Advertising.csv
 	Rscript code/scripts/eda-script.R
 
-regression: code/scripts/regression-script.R
+regression: code/scripts/regression-script.R data/Advertising.csv
 	Rscript code/scripts/regression-script.R
 
 report/report.pdf: report/report.Rmd
