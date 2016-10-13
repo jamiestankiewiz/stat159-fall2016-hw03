@@ -22,3 +22,21 @@ png("../../images/normal-qq-plot.png")
 plot(regression, which=3)
 dev.off()
 
+#individual scatterplots
+png("../../images/scatterplot-tv-sales.png")
+plot(ad$TV, ad$Sales, main='TV vs Sales', xlab= 'TV', ylab='Sales')
+lm1 <- lm(Sales ~ TV, data=ad)
+abline(lm1, col='red')
+dev.off()
+
+pdf("../../images/scatterplot-radio-sales.pdf")
+plot(ad$Radio, ad$Sales, main='Radio vs Sales', xlab= 'Radio', ylab='Sales')
+lm2 <- lm(Sales ~ Radio, data=ad)
+abline(lm2, col='red')
+dev.off()
+
+pdf('../../images/scatterplot-newspaper-sales.png')
+plot(ad$Newspaper, ad$Sales, main='Newspaper vs Radio', xlab= 'Radio', ylab='Sales')
+lm3 <- lm(Sales ~ Newspaper, data=ad)
+abline(lm3, col='red')
+dev.off()
