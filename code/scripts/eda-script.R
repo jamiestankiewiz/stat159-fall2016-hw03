@@ -1,4 +1,4 @@
-setwd('C:/Users/Jamie/Documents/pandoc-test/stat159/stat159-fall2016-hw03/data/scripts')
+#setwd('C:/Users/Jamie/Documents/pandoc-test/stat159/stat159-fall2016-hw03/data/scripts')
 ad <- read.csv('../../data/Advertising.csv')
 
 #Summary of TV
@@ -36,7 +36,7 @@ corrmat[lower.tri(corrmat)] <- NA
 
 #generating pairwise scatterplots
 png("../../images/scatterplot-matrix.png")
-plot(ad)
+plot(ad[2:5])
 dev.off()
 
 #creating the txt document
