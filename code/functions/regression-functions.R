@@ -14,7 +14,7 @@ residual_sum_squares <- function(lm){
 
 #include comments
 total_sum_squares <- function(lm){
-  TSS = sum(sum((unlist(lm$model[1]) - mean(unlist(lm$model[1])))^2)) 
+  
 }
 
 
