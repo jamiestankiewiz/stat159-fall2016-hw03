@@ -4,6 +4,7 @@ ad <- read.csv('../../data/Advertising.csv')
 regression <- lm(ad)
 regsum  <- summary(regression)
 
+#generating the RData
 save(regression, regsum, file='../../data/regression.RData')
 
 #produces the residual plot, qqplot and scale-location plot
@@ -36,7 +37,7 @@ abline(lm2, col='red')
 dev.off()
 
 pdf('../../images/scatterplot-newspaper-sales.png')
-plot(ad$Newspaper, ad$Sales, main='Newspaper vs Radio', xlab= 'Radio', ylab='Sales')
+plot(ad$Newspaper, ad$Sales, main='Newspaper vs Sales', xlab= 'Radio', ylab='Sales')
 lm3 <- lm(Sales ~ Newspaper, data=ad)
 abline(lm3, col='red')
 dev.off()
