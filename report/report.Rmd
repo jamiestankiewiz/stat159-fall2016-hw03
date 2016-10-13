@@ -1,0 +1,35 @@
+---
+title: "Report"
+author: "Jamie Stankiewiz"
+date: "October 13, 2016"
+output: pdf_document
+---
+# Abstract
+
+
+# Introduction
+
+# Data
+
+
+```{r cars}
+summary(cars)
+```
+
+
+```{r pressure, echo=T}
+plot(pressure)
+```
+
+
+# Methodology
+
+# Results
+
+1) Is at least one of the predictors useful in predicting the response?
+2) Do all predictors help to explain the response, or is only a subset of the predictors useful?
+3) How well does the model fit the data?
+4) How accurate is the prediction?
+
+# Conclusions
+
