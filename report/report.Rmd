@@ -10,11 +10,61 @@ output: pdf_document
 # Introduction
 
 # Data
+```{r}
 
+ad <- read.csv('../data/Advertising.csv')
 
-```{r cars}
-summary(cars)
 ```
+
+
+\bigskip
+\begin{center}
+Simple regression of Sales on Radio
+\end{center}
+```{r}
+
+coefficients(summary(lm(Sales ~ Radio, data= ad)))
+```
+
+\bigskip
+\begin{center}
+Simple regression of Sales on Newspaper
+\end{center}
+```{r}
+
+coefficients(summary(lm(Sales ~ Newspaper, data=ad)))
+
+```
+
+\bigskip
+\begin{center}
+Simple regression of Sales on TV
+\end{center}
+```{r}
+
+coefficients(summary(lm(Sales ~ TV, data = ad)))
+```
+
+\begin{center}
+Correlation Matrix:
+\end{center}
+```{r}
+
+corrmat <- round(cor(ad[2:5]),4)
+corrmat[lower.tri(corrmat)] <- NA
+corrmar
+
+```
+
+\begin{center}
+Coefficient estimates of the least squares model
+\end{center}
+```{r}
+
+round(summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))$coefficients, 3)
+```
+
+
 
 
 ```{r pressure, echo=T}
@@ -26,10 +76,44 @@ plot(pressure)
 
 # Results
 
+
+This table refers to the least squares model statistics for the multiple regression.
+```{r}
+
+regdata <- summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))
+values <- c(round(regdata$sigma,3), round(regdata$r.squared, 3), round(regdata$fstatistic, 3)[1])
+names <- c('Residual standard error', 'R-squared', 'F-statistic')
+matvals <- matrix(c(names,values), nrow=3, ncol=2)
+df <- as.data.frame(matvals, row.names=NA, col.names=c('Quantity', 'Value'))
+colnames(df) <- c('Quantity', 'Values')
+df
+
+```
+
+\bigskip
 1) Is at least one of the predictors useful in predicting the response?
+  The ANOVA test compares all of the \beta_0 values to check if they all are equal to zero. This let's us check to see if there's a difference between any given mean in a pairwise fashion.  Since our F-statistic corresponds to a very small p-value, we can reject the null hypothesis (\H_0).  Therefore, we can conclude that at least one of the predictors is useful in predicting the response.
+
+\bigskip
+
 2) Do all predictors help to explain the response, or is only a subset of the predictors useful?
+
+\bigskip  
+
 3) How well does the model fit the data?
+  To see how well the model fits the data, we look at the $R^2$ test statistic.  $R^2$ tells us how well the data fits the regression model.  Here, our $R^2$ value is 
+```{r}
+summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))$r.squared
+```
+You can see that is value is closer to 1 than it is to 0, meaning that the regression model is explained very much so by the predictors.
+
+\bigskip
+
 4) How accurate is the prediction?
+
+
+
+
 
 # Conclusions
 
