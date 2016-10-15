@@ -6,8 +6,12 @@ output: pdf_document
 ---
 # Abstract
 
+The goal is to look at a resopnse variable that is dependent on more than one predictor.  We will look at the advertising.csv data set provided by James et al. in the book "An Introduction to Statistical Learning".  In this case, our response variable we are looking at is Sales, and how that is determined the multiple predictor variables: TV, Radio and Newspaper.
 
 # Introduction
+
+We will look at how each variable relates pairwise (in a simple linear regression) as well as how all 3 predictors come together to create the response, Sales.  We will take a close look at the data by first comparing Sales on each individual predictor, using simple linear regression.  Then we will look at pairwise correlation to see correlation coefficients between two variables.  
+
 
 # Data
 ```{r}
@@ -17,6 +21,9 @@ ad <- read.csv('../data/Advertising.csv')
 ```
 
 
+The below tables are the coefficients of simple linear regression models of pairwise variables from the multiple regression model.  This tells us if the individual pairs of variables are related. Linear regression models with p-values of less than 1% are considered related to each other.
+
+\bigskip
 \bigskip
 \begin{center}
 Simple regression of Sales on Radio
@@ -25,6 +32,7 @@ Simple regression of Sales on Radio
 
 coefficients(summary(lm(Sales ~ Radio, data= ad)))
 ```
+
 
 \bigskip
 \begin{center}
@@ -36,6 +44,7 @@ coefficients(summary(lm(Sales ~ Newspaper, data=ad)))
 
 ```
 
+
 \bigskip
 \begin{center}
 Simple regression of Sales on TV
@@ -45,6 +54,12 @@ Simple regression of Sales on TV
 coefficients(summary(lm(Sales ~ TV, data = ad)))
 ```
 
+
+\bigskip
+
+
+The correlation matrix produced describes the pairwise correlation between the two variables.  A correlation value close to 1 indicates a strong relationship between the two variables, where a correlation value close to 0 tells that the two variables are independent from one another, or not related.
+
 \begin{center}
 Correlation Matrix:
 \end{center}
@@ -52,27 +67,41 @@ Correlation Matrix:
 
 corrmat <- round(cor(ad[2:5]),4)
 corrmat[lower.tri(corrmat)] <- NA
-corrmar
+corrmat
 
 ```
 
+
+
+
+\bigskip
+\bigskip
 \begin{center}
 Coefficient estimates of the least squares model
 \end{center}
 ```{r}
 
-round(summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))$coefficients, 3)
+table4 <- round(summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))$coefficients, 3)
+table4
 ```
+These are the coefficients of the least squares model for multiple regression.  Since TV and Radio have a p-value of <1%, they both significantly contribute to sales.  Their $\beta_0$ value is non-zero.  While newspaper doesn't seem to correlated to sales in multiple regression. Its $\beta_0$ value is closer to 0.
 
 
-
-
-```{r pressure, echo=T}
-plot(pressure)
-```
 
 
 # Methodology
+
+We first look at our data set, advertising.csv to look at the variables used.  TV, Radio, Newspaper and Sales are the variables we get by looking at the column names of our data sheet.  We then wish to look at the relationship between Sales and all of the variables individually, as well as all together.  To do so, we first generate a scatterplot of the 2 against each other.  Next, we create the regression line using the lm() function of the data. You can find these images in the images/ directory.  To get these estimates of the coefficients, we look at the outputs of the lm() function to see the statistics of the regression line (as shown below).   
+
+```{r}
+regression <- lm(ad)
+regression
+```
+
+After looking at the scatterplots, we ran the data through R to see if individual predictors relate to Sales (response).  This data was previously show in the Data section of this paper.  After looking at each of the variables individually, we look at them all together.
+
+
+
 
 # Results
 
@@ -91,29 +120,39 @@ df
 ```
 
 \bigskip
-1) Is at least one of the predictors useful in predicting the response?
-  The ANOVA test compares all of the \beta_0 values to check if they all are equal to zero. This let's us check to see if there's a difference between any given mean in a pairwise fashion.  Since our F-statistic corresponds to a very small p-value, we can reject the null hypothesis (\H_0).  Therefore, we can conclude that at least one of the predictors is useful in predicting the response.
+
+  The ANOVA test compares all of the $\beta_0$ values to check if they all are equal to zero. This lets us check to see if there's a difference between any given mean in a pairwise fashion.  Since our F-statistic corresponds to a very small p-value, we can reject the null hypothesis ($H_0$).  Therefore, we can conclude that at least one of the predictors is useful in predicting the response.
 
 \bigskip
 
-2) Do all predictors help to explain the response, or is only a subset of the predictors useful?
+
+  From the table, we can see that the variables, 
+```{r}
+
+for(i in 1:nrow(table4))  
+  if(table4[i,4]<.01){
+  print(rownames(table4)[i])
+  }
+  
+```
+have a p-value of less than 1%.  Therefore, these are the variables that are significant to the response.
 
 \bigskip  
 
-3) How well does the model fit the data?
+
   To see how well the model fits the data, we look at the $R^2$ test statistic.  $R^2$ tells us how well the data fits the regression model.  Here, our $R^2$ value is 
-```{r}
-summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))$r.squared
+``` {r} 
+
+summary(lm(Sales ~ TV+Radio+Newspaper , data=ad))$r.squared 
 ```
 You can see that is value is closer to 1 than it is to 0, meaning that the regression model is explained very much so by the predictors.
 
 \bigskip
 
-4) How accurate is the prediction?
-
-
+To see how accurate our prediction is, we look at the confidence intervals or prediction intervals.  This is shown more in (James et al.) "An Introduction to Statistical Learning".
 
 
 
 # Conclusions
 
+From this data, we can conclude that in multiple regression, TV and Radio had an impact on Sales, while Newspaper did not.  We also looked at our $r^2$ value to see how well the predictors as a whole determined the response variable.  We also see that individual effects on Sales had a much different result than putting all of the variables together.  
