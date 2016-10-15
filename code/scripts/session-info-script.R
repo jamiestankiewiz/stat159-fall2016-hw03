@@ -1,4 +1,5 @@
-# did not call the library() function to do any of the coding.
+#used:
+library(testthat)
 
 sink('../../session-info.txt')
 sessionInfo()
