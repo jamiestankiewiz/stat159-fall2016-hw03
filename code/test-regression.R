@@ -49,6 +49,6 @@ context('Test for F')
 
 test_that("f_statistic works", {
   
-  expect_equal(f_statistic(reg), regsum$fstatistic[1] )
+  expect_equal(f_statistic(reg), as.vector(regsum$fstatistic[1]) )
   
 })
